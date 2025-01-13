@@ -1,12 +1,14 @@
 "use client";
 import React, { useState } from "react";
+import { supabase } from "@/lib/supabaseClient"; // Import Supabase client
+import { useRouter } from "next/navigation";
 import UploadForm from "../../../components/UploadForm"; // Import komponen UploadForm
 import ListKalibrasi from "../../../components/ListKalibrasi";
 import Beranda from "../../../components/Beranda";
 
 const Dashboard = () => {
-  // State untuk menentukan konten yang aktif
   const [activePage, setActivePage] = useState("dashboard");
+  const router = useRouter();
 
   // Fungsi untuk merender konten dinamis berdasarkan menu yang diklik
   const renderContent = () => {
@@ -16,7 +18,7 @@ const Dashboard = () => {
       case "Daftar Arsip":
         return <ListKalibrasi />;
       case "Upload Arsip":
-        return <UploadForm />; // Muat komponen UploadForm di sini
+        return <UploadForm />;
       case "gedungs":
         return <p className="text-gray-400">Ini adalah halaman Gedungs.</p>;
       case "kategoriAset":
@@ -29,6 +31,17 @@ const Dashboard = () => {
         return <p className="text-gray-400">Ini adalah halaman Ruangans.</p>;
       default:
         return <p className="text-gray-400">Halaman tidak ditemukan.</p>;
+    }
+  };
+
+  // Fungsi untuk Sign Out
+  const handleSignOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("Error signing out:", error.message);
+      alert("Gagal keluar. Silakan coba lagi.");
+    } else {
+      router.push("/Login"); // Redirect ke halaman login
     }
   };
 
@@ -82,7 +95,11 @@ const Dashboard = () => {
               <p className="text-sm">Welcome</p>
               <p className="font-bold">Admin</p>
             </div>
-            <button className="bg-gray-700 px-4 py-2 rounded">Sign out</button>
+            <button
+              onClick={handleSignOut}
+              className="bg-red-500 px-4 py-2 rounded hover:bg-red-600">
+              Sign out
+            </button>
           </div>
         </header>
 

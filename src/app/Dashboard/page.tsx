@@ -1,14 +1,34 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient"; // Import Supabase client
 import { useRouter } from "next/navigation";
-import UploadForm from "../../../components/UploadForm"; // Import komponen UploadForm
+import UploadForm from "../../../components/UploadForm";
 import ListKalibrasi from "../../../components/ListKalibrasi";
 import Beranda from "../../../components/Beranda";
 
 const Dashboard = () => {
   const [activePage, setActivePage] = useState("dashboard");
+  const [loading, setLoading] = useState(true); // Untuk loading saat cek sesi
   const router = useRouter();
+
+  useEffect(() => {
+    const checkUserSession = async () => {
+      // Periksa sesi pengguna
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!session) {
+        // Jika tidak ada sesi, redirect ke halaman login
+        router.push("/Login");
+      } else {
+        // Jika ada sesi, hentikan loading
+        setLoading(false);
+      }
+    };
+
+    checkUserSession();
+  }, [router]);
 
   // Fungsi untuk merender konten dinamis berdasarkan menu yang diklik
   const renderContent = () => {
@@ -19,16 +39,6 @@ const Dashboard = () => {
         return <ListKalibrasi />;
       case "Upload Arsip":
         return <UploadForm />;
-      case "gedungs":
-        return <p className="text-gray-400">Ini adalah halaman Gedungs.</p>;
-      case "kategoriAset":
-        return (
-          <p className="text-gray-400">Ini adalah halaman Kategori Aset.</p>
-        );
-      case "lantais":
-        return <p className="text-gray-400">Ini adalah halaman Lantais.</p>;
-      case "ruangans":
-        return <p className="text-gray-400">Ini adalah halaman Ruangans.</p>;
       default:
         return <p className="text-gray-400">Halaman tidak ditemukan.</p>;
     }
@@ -41,9 +51,18 @@ const Dashboard = () => {
       console.error("Error signing out:", error.message);
       alert("Gagal keluar. Silakan coba lagi.");
     } else {
-      router.push("/Login"); // Redirect ke halaman login
+      router.push("/Login");
     }
   };
+
+  if (loading) {
+    // Tampilkan loading screen saat memeriksa sesi
+    return (
+      <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
+        <p className="text-gray-400">Memuat...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex">

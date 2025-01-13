@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import UploadForm from "../../../components/UploadForm";
 import ListKalibrasi from "../../../components/ListKalibrasi";
 import Beranda from "../../../components/Beranda";
+import Download from "../../../components/Download";
 
 const Dashboard = () => {
   const [activePage, setActivePage] = useState("dashboard");
@@ -39,6 +40,8 @@ const Dashboard = () => {
         return <ListKalibrasi />;
       case "Upload Arsip":
         return <UploadForm />;
+      case "Download Arsip":
+        return <Download />;
       default:
         return <p className="text-gray-400">Halaman tidak ditemukan.</p>;
     }
@@ -98,6 +101,16 @@ const Dashboard = () => {
               }`}>
               <span>🛠</span>
               <span>Upload Arsip</span>
+            </button>
+          </div>
+          <div>
+            <button
+              onClick={() => setActivePage("Download Arsip")}
+              className={`flex items-center space-x-2 ${
+                activePage === "Download Arsip" ? "text-blue-400" : ""
+              }`}>
+              <span>🛠</span>
+              <span>Download Arsip</span>
             </button>
           </div>
         </nav>

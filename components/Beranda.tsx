@@ -68,7 +68,6 @@ const Dashboard = () => {
                     <th className="p-3">Lokasi</th>
                     <th className="p-3">Tanggal</th>
                     <th className="p-3">Periode (Bulan)</th>
-                    <th className="p-3">Sertifikat</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -82,20 +81,6 @@ const Dashboard = () => {
                       <td className="p-3">{item.lokasi}</td>
                       <td className="p-3">{item.dikalibrasi_pada}</td>
                       <td className="p-3">{item.periode}</td>
-                      <td className="p-3">
-                        {item.file_path ? (
-                          <a
-                            href={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${item.file_path}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            download={item.file_path.split("/").pop()}
-                            className="text-blue-400 hover:underline">
-                            Unduh Sertifikat
-                          </a>
-                        ) : (
-                          <span className="text-gray-400">Tidak ada file</span>
-                        )}
-                      </td>
                     </tr>
                   ))}
                 </tbody>

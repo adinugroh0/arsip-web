@@ -88,8 +88,9 @@ const Dashboard = () => {
                             href={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${item.file_path}`}
                             target="_blank"
                             rel="noopener noreferrer"
+                            download={item.file_path.split("/").pop()}
                             className="text-blue-400 hover:underline">
-                            Lihat Sertifikat
+                            Unduh Sertifikat
                           </a>
                         ) : (
                           <span className="text-gray-400">Tidak ada file</span>

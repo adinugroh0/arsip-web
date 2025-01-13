@@ -92,7 +92,7 @@ const CreateKalibrasi = () => {
               <label
                 htmlFor="namaBarang"
                 className="block text-sm font-medium text-gray-400 mb-2">
-                Nama
+                Nomor Pelanggan
               </label>
               <input
                 type="text"
@@ -110,7 +110,7 @@ const CreateKalibrasi = () => {
               <label
                 htmlFor="lokasi"
                 className="block text-sm font-medium text-gray-400 mb-2">
-                Lokasi
+                Alamat
               </label>
               <input
                 type="text"

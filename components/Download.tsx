@@ -81,9 +81,9 @@ const ListKalibrasi = () => {
             <thead className="bg-gray-800">
               <tr>
                 <th className="p-4 text-left text-sm text-gray-300">
-                  Nama Barang
+                  Nomor Pelanggan
                 </th>
-                <th className="p-4 text-left text-sm text-gray-300">Lokasi</th>
+                <th className="p-4 text-left text-sm text-gray-300">Alamat</th>
                 <th className="p-4 text-left text-sm text-gray-300">Tanggal</th>
                 <th className="p-4 text-left text-sm text-gray-300">Periode</th>
                 <th className="p-4 text-left text-sm text-gray-300">Aksi</th>

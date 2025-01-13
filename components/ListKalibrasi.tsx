@@ -61,8 +61,8 @@ const ListKalibrasi = () => {
             <table className="w-full bg-gray-800 rounded-lg shadow-lg overflow-hidden">
               <thead>
                 <tr className="bg-gray-700 text-left text-gray-300">
-                  <th className="p-3">Nama Barang</th>
-                  <th className="p-3">Lokasi</th>
+                  <th className="p-3">Nomer Pelanggan</th>
+                  <th className="p-3">Alamat</th>
                   <th className="p-3">Tanggal</th>
                   <th className="p-3">Periode (Bulan)</th>
                   <th className="p-3">Aksi</th>

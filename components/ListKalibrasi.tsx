@@ -83,17 +83,11 @@ const ListKalibrasi = () => {
                     <td className="p-3">
                       {item.file_path ? (
                         <a
-                          href={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/kalibrasi/${item.file_path}`}
+                          href={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${item.file_path}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           download={item.file_path.split("/").pop()}
-                          className="text-blue-400 hover:underline"
-                          onClick={() =>
-                            console.log("Download initiated:", {
-                              filePath: item.file_path,
-                              url: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/kalibrasi/${item.file_path}`,
-                            })
-                          }>
+                          className="text-blue-400 hover:underline">
                           Unduh Sertifikat
                         </a>
                       ) : (

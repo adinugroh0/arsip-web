@@ -34,49 +34,20 @@ const ListKalibrasi = () => {
     fetchData();
   }, []);
 
-  const handleDelete = async (id: number, filePath: string | null) => {
+  const handleDelete = async (id: number) => {
     const confirmDelete = window.confirm(
       "Apakah Anda yakin ingin menghapus data ini?"
     );
     if (!confirmDelete) return;
 
-    try {
-      // Hapus file di Supabase Storage jika ada
-      if (filePath) {
-        const bucketName = "kalibrasi"; // Nama bucket
-        console.log("Menghapus file di storage:", filePath);
+    const { error } = await supabase.from("kalibrasi").delete().eq("id", id);
 
-        const { error: deleteFileError } = await supabase.storage
-          .from(bucketName)
-          .remove([filePath]);
-
-        if (deleteFileError) {
-          console.error("Error deleting file:", deleteFileError.message);
-          alert("Gagal menghapus file di storage.");
-          return;
-        }
-
-        console.log("File berhasil dihapus:", filePath);
-      }
-
-      // Hapus data dari tabel
-      console.log("Menghapus data dari tabel...");
-      const { error: deleteDataError } = await supabase
-        .from("kalibrasi")
-        .delete()
-        .eq("id", id);
-
-      if (deleteDataError) {
-        console.error("Error deleting data:", deleteDataError.message);
-        alert("Gagal menghapus data.");
-        return;
-      }
-
+    if (error) {
+      console.error("Error deleting data:", error.message);
+      alert("Gagal menghapus data.");
+    } else {
       alert("Data berhasil dihapus.");
-      setData((prevData) => prevData.filter((item) => item.id !== id)); // Hapus item dari state
-    } catch (error) {
-      console.error("Unexpected error:", error);
-      alert("Terjadi kesalahan saat menghapus data.");
+      setData((prevData) => prevData.filter((item) => item.id !== id));
     }
   };
 
@@ -84,7 +55,7 @@ const ListKalibrasi = () => {
     <div className="min-h-screen bg-gray-900 text-white p-6">
       <div className="max-w-5xl mx-auto">
         {loading ? (
-          <p className="text-gray-400">Loading data...</p>
+          <p className="text-gray-400 text-center">Loading data...</p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full bg-gray-800 rounded-lg shadow-lg overflow-hidden">
@@ -111,21 +82,27 @@ const ListKalibrasi = () => {
                     <td className="p-3">{item.periode}</td>
                     <td className="p-3">
                       {item.file_path ? (
-                        <button
-                          onClick={() => {
-                            const fileUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${item.file_path}`;
-                            window.open(fileUrl, "_blank");
-                          }}
-                          className="text-blue-400 hover:underline">
-                          Lihat Sertifikat
-                        </button>
+                        <a
+                          href={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/kalibrasi/${item.file_path}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          download={item.file_path.split("/").pop()}
+                          className="text-blue-400 hover:underline"
+                          onClick={() =>
+                            console.log("Download initiated:", {
+                              filePath: item.file_path,
+                              url: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/kalibrasi/${item.file_path}`,
+                            })
+                          }>
+                          Unduh Sertifikat
+                        </a>
                       ) : (
                         <span className="text-gray-400">Tidak ada file</span>
                       )}
                     </td>
                     <td className="p-3">
                       <button
-                        onClick={() => handleDelete(item.id, item.file_path)}
+                        onClick={() => handleDelete(item.id)}
                         className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
                         Hapus
                       </button>

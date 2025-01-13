@@ -1,8 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 
-// Ganti dengan URL dan anon key dari dashboard Supabase Anda
-const supabaseUrl = "https://hhgudjkoytojeotqwcgo.supabase.co";
-const supabaseKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhoZ3VkamtveXRvamVvdHF3Y2dvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY0MjM1OTEsImV4cCI6MjA1MTk5OTU5MX0.PruNNqzOEKlvYzUpRRBzlm9kXtus85MO5tJNhbdt-Ag";
+const SUPABASE_URL = "https://wmyqymyckqexxxzquqje.supabase.co";
+const SUPABASE_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndteXF5bXlja3FleHh4enF1cWplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI4NzE4ODcsImV4cCI6MjA0ODQ0Nzg4N30.ptNDRq1QDVbBz7gr_iYymXLuAyiw_ozlYxWzRmepVsI";
 
-export const supabase = createClient(supabaseUrl, supabaseKey);
+export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
